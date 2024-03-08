@@ -1,0 +1,127 @@
+﻿@model Tuple<GestioneHotel.Models.Prenotazione, List<GestioneHotel.Models.RichiestaServizio>>
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Prenotazione</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Item1.IDPrenotazione)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Item1.IDPrenotazione)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Item1.AnnoPreno)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Item1.AnnoPreno)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Item1.DataPreno)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Item1.DataPreno)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Item1.DataCheckIn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Item1.DataCheckIn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Item1.DataCheckOut)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Item1.DataCheckOut)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Item1.Anticipo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Item1.Anticipo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Item1.FK_IDCliente)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Item1.FK_IDCliente)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Item1.FK_NrCamera)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Item1.FK_NrCamera)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Item1.FormulaPreno)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Item1.FormulaPreno)
+        </dd>
+
+        @*<dt>
+                @Html.DisplayNameFor(model => model.Item1.FK_IDRichServizio)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Item1.FK_IDRichServizio)
+            </dd>*@
+
+    </dl>
+</div>
+
+<hr />
+
+<div>
+    <h4>Servizi richiesti</h4>
+
+    <table class="table">
+        <tr>
+            <th>IDRichServizio</th>
+            <th>DataServizio</th>
+            <th>QuantitaServizio</th>
+            <th>FK_IDServizio</th>
+        </tr>
+
+        @foreach (var richserv in Model.Item2)
+        {
+            <tr>
+                <td>@richserv.IDRichServizio</td>
+                <td>@richserv.DataServizio</td>
+                <td>@richserv.QuantitaServizio</td>
+                <td>@richserv.FK_IDServizio</td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", "RichiesteServizi", new { id = richserv.IDRichServizio }, null) |
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Item1.IDPrenotazione }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

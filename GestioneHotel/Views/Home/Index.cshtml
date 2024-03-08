@@ -1,0 +1,54 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<main>
+
+    <input type="text" id="inputCF" placeholder="Inserisci Codice Fiscale" />
+    <button id="cercaPerCF">Cerca Prenotazioni per CF</button>
+    <br />
+    <button id="numeroPensioneCompleta">Numero Prenotazioni Pensione Completa</button>
+
+    <hr />
+
+    <div id="risultatiPrenotazioni"></div>
+    <div id="numeroPensioneCompletaRisultato"></div>
+
+</main>
+
+@section Scripts {
+    <script src="~/Scripts/jquery-3.6.0.min.js"></script>
+
+
+
+    <script>
+        $(document).ready(function () {
+            $('#cercaPerCF').click(function () {
+                var codiceFiscale = $('#inputCF').val();
+                fetch('/Home/CercaPrenotazioniPerCF?codiceFiscale=' + codiceFiscale)
+                    .then(response => response.json())
+                    .then(data => {
+                        var contenuto = '<h3>Prenotazioni Trovate:</h3>';
+                        if (data.length > 0) {
+                            contenuto += '<ul>';
+                            data.forEach(p => {
+                                contenuto += `<li>ID Prenotazione: ${p.IDPrenotazione}, Data Preno: ${p.DataPreno}, Data Check-In: ${p.DataCheckIn}, Data Check-Out: ${p.DataCheckOut}</li>`;
+                            });
+                            contenuto += '</ul>';
+                        } else {
+                            contenuto += '<p>Nessuna prenotazione trovata per il codice fiscale inserito.</p>';
+                        }
+                        $('#risultatiPrenotazioni').html(contenuto);
+                    });
+
+                $('#numeroPensioneCompleta').click(function () {
+                    fetch('/Home/NumeroPrenotazioniPensioneCompleta')
+                        .then(response => response.json())
+                        .then(data => {
+                            $('#numeroPensioneCompletaRisultato').html(`<h3>Numero totale di prenotazioni "Pensione Completa": ${data}</h3>`);
+                        });
+                });
+            });
+    </script>
+
+}

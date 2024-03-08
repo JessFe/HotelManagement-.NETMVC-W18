@@ -1,0 +1,87 @@
+﻿@model IEnumerable<GestioneHotel.Models.Prenotazione>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.IDPrenotazione)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AnnoPreno)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DataPreno)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DataCheckIn)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DataCheckOut)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Anticipo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FK_IDCliente)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FK_NrCamera)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FormulaPreno)
+        </th>
+        @*<th>
+            @Html.DisplayNameFor(model => model.FK_IDRichServizio)
+        </th>*@
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.IDPrenotazione)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AnnoPreno)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DataPreno)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DataCheckIn)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DataCheckOut)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Anticipo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FK_IDCliente)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FK_NrCamera)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FormulaPreno)
+        </td>
+        @*<td>
+            @Html.DisplayFor(modelItem => item.FK_IDRichServizio)
+        </td>*@
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.IDPrenotazione }) |
+            @Html.ActionLink("Details", "Details", new { id = item.IDPrenotazione }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.IDPrenotazione })
+        </td>
+    </tr>
+}
+
+</table>

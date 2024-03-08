@@ -1,0 +1,71 @@
+﻿@model Tuple<GestioneHotel.Models.Servizio, List<GestioneHotel.Models.RichiestaServizio>>
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Servizio</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Item1.IDServizio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Item1.IDServizio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Item1.TipoServizio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Item1.TipoServizio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Item1.PrezzoServizio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Item1.PrezzoServizio)
+        </dd>
+
+    </dl>
+</div>
+
+<hr />
+
+<div>
+    <h4>Servizi richiesti</h4>
+
+    <table class="table">
+        <tr>
+            <th>IDRichServizio</th>
+            <th>DataServizio</th>
+            <th>QuantitaServizio</th>
+            <th>FK_IDServizio</th>
+        </tr>
+
+        @foreach (var richserv in Model.Item2)
+        {
+            <tr>
+                <td>@richserv.IDRichServizio</td>
+                <td>@richserv.DataServizio</td>
+                <td>@richserv.QuantitaServizio</td>
+                <td>@richserv.FK_IDServizio</td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", "RichiesteServizi", new { id = richserv.IDRichServizio }, null) |
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Item1.IDServizio }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

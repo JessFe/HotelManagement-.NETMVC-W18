@@ -1,0 +1,51 @@
+﻿@model IEnumerable<GestioneHotel.Models.RichiestaServizio>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.IDRichServizio)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DataServizio)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.QuantitaServizio)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FK_IDServizio)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.IDRichServizio)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DataServizio)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.QuantitaServizio)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FK_IDServizio)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.IDRichServizio }) |
+            
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>

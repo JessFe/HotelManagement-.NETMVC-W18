@@ -1,0 +1,99 @@
+﻿@model Tuple<GestioneHotel.Models.Camera, List<GestioneHotel.Models.Prenotazione>>
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Camera</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Item1.NrCamera)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Item1.NrCamera)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Item1.TipoCamera)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Item1.TipoCamera)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Item1.PrezzoCamera)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Item1.PrezzoCamera)
+        </dd>
+
+    </dl>
+</div>
+
+<hr />
+
+<div>
+    <h4>Prenotazioni</h4>
+
+    <table class="table">
+        <tr>
+            <th>IDPrenotazione</th>
+            <th>AnnoPreno</th>
+            <th>DataPreno</th>
+            <th>DataCheckIn</th>
+            <th>DataCheckOut</th>
+            <th>Anticipo</th>
+            <th>FK_NrCamera</th>
+            <th>FormulaPreno</th>
+        </tr>
+
+        @foreach (var prenotazione in Model.Item2)
+        {
+            <tr>
+                <td>
+                    @prenotazione.IDPrenotazione
+                </td>
+                <td>
+                    @prenotazione.AnnoPreno
+                </td>
+                <td>
+                    @prenotazione.DataPreno
+                </td>
+                <td>
+                    @prenotazione.DataCheckIn
+                </td>
+                <td>
+                    @prenotazione.DataCheckOut
+                </td>
+                <td>
+                    @prenotazione.Anticipo
+                </td>
+                <td>
+                    @prenotazione.FK_NrCamera
+                </td>
+                <td>
+                    @prenotazione.FormulaPreno
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", "Prenotazioni", new { id = prenotazione.IDPrenotazione }, null) |
+                    @Html.ActionLink("Details", "Details", "Prenotazioni", new { id = prenotazione.IDPrenotazione }, null) |
+                    @Html.ActionLink("Delete", "Delete", new { id = prenotazione.IDPrenotazione })
+                </td>
+            </tr>
+        }
+
+    </table>
+
+</div>
+
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Item1.NrCamera }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
