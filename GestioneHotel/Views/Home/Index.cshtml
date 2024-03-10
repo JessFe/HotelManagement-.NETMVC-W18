@@ -3,52 +3,66 @@
 }
 
 <main>
+    <div class="d-flex flex-column align-items-center mt-5">
 
-    <input type="text" id="inputCF" placeholder="Inserisci Codice Fiscale" />
-    <button id="cercaPerCF">Cerca Prenotazioni per CF</button>
-    <br />
-    <button id="numeroPensioneCompleta">Numero Prenotazioni Pensione Completa</button>
 
-    <hr />
+        <div class="d-flex flex-column my-3">
 
-    <div id="risultatiPrenotazioni"></div>
-    <div id="numeroPensioneCompletaRisultato"></div>
+            <div class="form-group d-flex flex-column align-items-center">
+                <input type="text" class="form-control" id="inputCF" placeholder="Inserisci Codice Fiscale" />
+                <button id="cercaPerCF" class="btn btn-primary btn-sm w-100">Cerca per CF</button>
+            </div>
+
+            <hr />
+
+            <div class="form-groupmt-4">
+                <button id="numeroPensioneCompleta" class="btn btn-primary btn-sm w-100">Tot. Pensione Completa</button>
+            </div>
+
+        </div>
+        <div id="risultatiAsync" class="my-4"></div>
+
+
+    </div>
+
 
 </main>
 
 @section Scripts {
-    <script src="~/Scripts/jquery-3.6.0.min.js"></script>
 
-
+    <!-- Js per effettuare chiamate asincrone -->
 
     <script>
+        /* stampa prenotazioni per codice fiscale */
         $(document).ready(function () {
             $('#cercaPerCF').click(function () {
                 var codiceFiscale = $('#inputCF').val();
                 fetch('/Home/CercaPrenotazioniPerCF?codiceFiscale=' + codiceFiscale)
                     .then(response => response.json())
                     .then(data => {
-                        var contenuto = '<h3>Prenotazioni Trovate:</h3>';
+                        var contenuto = '<h4>Prenotazioni Trovate:</h4>';
                         if (data.length > 0) {
                             contenuto += '<ul>';
                             data.forEach(p => {
-                                contenuto += `<li>ID Prenotazione: ${p.IDPrenotazione}, Data Preno: ${p.DataPreno}, Data Check-In: ${p.DataCheckIn}, Data Check-Out: ${p.DataCheckOut}</li>`;
+                                contenuto += `<li class="link-dark pb-2"><a class="link-dark" href="/Prenotazioni/Details/${p.IDPrenotazione}">Prenotazione ${p.AnnoPreno}-${p.IDPrenotazione} →</li>`;
                             });
                             contenuto += '</ul>';
                         } else {
                             contenuto += '<p>Nessuna prenotazione trovata per il codice fiscale inserito.</p>';
                         }
-                        $('#risultatiPrenotazioni').html(contenuto);
+                        $('#risultatiAsync').html(contenuto);
                     });
-
-                $('#numeroPensioneCompleta').click(function () {
-                    fetch('/Home/NumeroPrenotazioniPensioneCompleta')
-                        .then(response => response.json())
-                        .then(data => {
-                            $('#numeroPensioneCompletaRisultato').html(`<h3>Numero totale di prenotazioni "Pensione Completa": ${data}</h3>`);
-                        });
-                });
             });
+
+            /* stampa numero di prenotazioni pensione completa */
+            $('#numeroPensioneCompleta').click(function () {
+                fetch('/Home/NumeroPrenotazioniPensioneCompleta')
+                    .then(response => response.json())
+                    .then(data => {
+                        $('#risultatiAsync').html(`<h4>Tot."Pensione Completa": ${data}</h4>`);
+                    });
+            });
+        });
     </script>
 
 }

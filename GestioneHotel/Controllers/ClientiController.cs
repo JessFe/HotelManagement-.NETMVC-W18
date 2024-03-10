@@ -6,17 +6,20 @@ using System.Web.Mvc;
 
 namespace GestioneHotel.Controllers
 {
+    [Authorize]
     public class ClientiController : Controller
     {
         private string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["connStringDb"].ConnectionString;
 
-        // GET: Clienti
+        // CLIENTI INDEX
+        // Visualizza l'elenco dei clienti ordinato per cognome
         public ActionResult Index()
         {
             List<Cliente> clienti = new List<Cliente>();
 
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
+                // Query per visualizzare l'elenco dei clienti
                 SqlCommand cmd = new SqlCommand("SELECT * FROM Clienti ORDER BY Cognome ASC", conn);
 
                 try
@@ -25,6 +28,7 @@ namespace GestioneHotel.Controllers
                     SqlDataReader reader = cmd.ExecuteReader();
                     while (reader.Read())
                     {
+                        // Aggiunge il cliente alla lista
                         clienti.Add(new Cliente
                         {
                             IDCliente = Convert.ToInt32(reader["IDCliente"]),
@@ -39,6 +43,7 @@ namespace GestioneHotel.Controllers
                         });
                     }
                 }
+                // Gestione eccezioni 
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
@@ -47,17 +52,21 @@ namespace GestioneHotel.Controllers
             return View(clienti);
         }
 
+        // CLIENTI CREATE
+        // Visualizza il form per l'inserimento di un nuovo cliente
         public ActionResult Create()
         {
             return View();
         }
 
+        // Salva i dati del nuovo cliente nel database
         [HttpPost]
         public ActionResult Create(Cliente cliente)
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
+                // Query per inserire un nuovo cliente
                 SqlCommand cmd = new SqlCommand("INSERT INTO Clienti (Cognome, Nome, CodFiscale, Citta, Prov, Tel, Cell, Email) VALUES (@Cognome, @Nome, @CodFiscale, @Citta, @Prov, @Tel, @Cell, @Email)", conn);
                 cmd.Parameters.AddWithValue("@Cognome", cliente.Cognome);
                 cmd.Parameters.AddWithValue("@Nome", cliente.Nome);
@@ -80,6 +89,7 @@ namespace GestioneHotel.Controllers
                         ModelState.AddModelError("", "Errore nell'inserimento del cliente");
                     }
                 }
+                // Gestione eccezioni
                 catch (Exception ex)
                 {
                     ModelState.AddModelError("", $"Si è verificato un errore: {ex.Message}");
@@ -88,11 +98,14 @@ namespace GestioneHotel.Controllers
             return View(cliente);
         }
 
+        // CLIENTI EDIT
+        // Visualizza il form per la modifica dei dati del cliente
         public ActionResult Edit(int id)
         {
             Cliente cliente = null;
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
+                // Query per selezionare i dati del cliente in base all'ID
                 SqlCommand cmd = new SqlCommand("SELECT * FROM Clienti WHERE IDCliente = @IDCliente", conn);
                 cmd.Parameters.AddWithValue("@IDCliente", id);
 
@@ -102,6 +115,7 @@ namespace GestioneHotel.Controllers
                     SqlDataReader reader = cmd.ExecuteReader();
                     if (reader.Read())
                     {
+                        // Imposta i dati del cliente
                         cliente = new Cliente
                         {
                             IDCliente = (int)reader["IDCliente"],
@@ -116,6 +130,7 @@ namespace GestioneHotel.Controllers
                         };
                     }
                 }
+                // Gestione eccezioni
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
@@ -124,12 +139,14 @@ namespace GestioneHotel.Controllers
             return View(cliente);
         }
 
+        // Salva i dati modificati del cliente
         [HttpPost]
         public ActionResult Edit(Cliente cliente)
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
+                // Query per aggiornare i dati del cliente
                 SqlCommand cmd = new SqlCommand("UPDATE Clienti SET Cognome = @Cognome, Nome = @Nome, CodFiscale = @CodFiscale, Citta = @Citta, Prov = @Prov, Tel = @Tel, Cell = @Cell, Email = @Email WHERE IDCliente = @IDCliente", conn);
                 cmd.Parameters.AddWithValue("@IDCliente", cliente.IDCliente);
                 cmd.Parameters.AddWithValue("@Cognome", cliente.Cognome);
@@ -153,6 +170,7 @@ namespace GestioneHotel.Controllers
                         ModelState.AddModelError("", "Errore nell'aggiornamento del cliente");
                     }
                 }
+                // Gestione eccezioni
                 catch (Exception ex)
                 {
                     ModelState.AddModelError("", $"Si è verificato un errore: {ex.Message}");
@@ -161,6 +179,8 @@ namespace GestioneHotel.Controllers
             return View(cliente);
         }
 
+        // CLIENTI DETAILS
+        // Visualizza i dettagli del cliente e l'elenco delle prenotazioni
         public ActionResult Details(int id)
         {
             Cliente cliente = null;
@@ -168,6 +188,7 @@ namespace GestioneHotel.Controllers
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
+                // Query per selezionare i dati del cliente in base all'ID
                 SqlCommand cmd = new SqlCommand("SELECT * FROM Clienti WHERE IDCliente = @IDCliente", conn);
                 cmd.Parameters.AddWithValue("@IDCliente", id);
 
@@ -176,6 +197,7 @@ namespace GestioneHotel.Controllers
                     SqlDataReader reader = cmd.ExecuteReader();
                     if (reader.Read())
                     {
+                        // Imposta i dati del cliente
                         cliente = new Cliente
                         {
                             IDCliente = Convert.ToInt32(reader["IDCliente"]),
@@ -191,12 +213,19 @@ namespace GestioneHotel.Controllers
                     }
                     reader.Close();
                 }
+                // Gestione eccezioni
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
                 }
 
-                string sqlPrenotazioni = "SELECT * FROM Prenotazioni WHERE FK_IDCliente = @IDCliente ORDER BY DataCheckIn DESC";
+                // Query per selezionare l'elenco delle prenotazioni in base all'ID del cliente
+                string sqlPrenotazioni = @"
+                                  SELECT P.*, C.TipoCamera
+                                  FROM Prenotazioni P
+                                  JOIN Camere C ON P.FK_NrCamera = C.NrCamera
+                                  WHERE P.FK_IDCliente = @IDCliente
+                                  ORDER BY P.DataCheckIn DESC";
                 SqlCommand cmdPrenotazioni = new SqlCommand(sqlPrenotazioni, conn);
                 cmdPrenotazioni.Parameters.AddWithValue("@IDCliente", id);
 
@@ -205,6 +234,7 @@ namespace GestioneHotel.Controllers
                     SqlDataReader reader = cmdPrenotazioni.ExecuteReader();
                     while (reader.Read())
                     {
+                        // Aggiunge la prenotazione alla lista
                         prenotazioni.Add(new Prenotazione
                         {
                             IDPrenotazione = Convert.ToInt32(reader["IDPrenotazione"]),
@@ -215,17 +245,20 @@ namespace GestioneHotel.Controllers
                             Anticipo = Convert.ToDecimal(reader["Anticipo"]),
                             FK_IDCliente = Convert.ToInt32(reader["FK_IDCliente"]),
                             FK_NrCamera = Convert.ToInt32(reader["FK_NrCamera"]),
+                            TipoCamera = reader["TipoCamera"].ToString(),
                             FormulaPreno = reader["FormulaPreno"].ToString()
                         });
 
                     }
                     reader.Close();
                 }
+                // Gestione eccezioni
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
                 }
             }
+            // Crea un modello con i dati del cliente e l'elenco delle prenotazioni
             var model = new Tuple<Cliente, List<Prenotazione>>(cliente, prenotazioni);
 
             return View(model);

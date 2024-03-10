@@ -4,68 +4,75 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h3>Servizio</h3>
 
 <div>
-    <h4>Servizio</h4>
+
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Item1.IDServizio)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Item1.IDServizio)
-        </dd>
+    <div class="d-flex">
+        <div class="flex-column fw-semibold px-3">
+            <p>@Html.DisplayNameFor(model => model.Item1.IDServizio)</p>
+            <p>@Html.DisplayNameFor(model => model.Item1.TipoServizio)</p>
+            <p>@Html.DisplayNameFor(model => model.Item1.PrezzoServizio)</p>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Item1.TipoServizio)
-        </dt>
+        </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Item1.TipoServizio)
-        </dd>
+        <div class="flex-column px-3">
+            <p class="border-bottom px-3">@Html.DisplayFor(model => model.Item1.IDServizio)</p>
+            <p class="border-bottom px-3">@Html.DisplayFor(model => model.Item1.TipoServizio)</p>
+            <p class="border-bottom px-3">@Html.DisplayFor(model => model.Item1.PrezzoServizio) €</p>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Item1.PrezzoServizio)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Item1.PrezzoServizio)
-        </dd>
+        </div>
+    </div>
 
-    </dl>
 </div>
+
+<p class="my-2">
+    @Html.ActionLink("≡ Modifica", "Edit", new { id = Model.Item1.IDServizio }, new { @class = "btn btn-primary btn-sm" })
+    @Html.ActionLink("← Lista Servizi", "Index", null, new { @class = "btn btn-primary btn-sm" })
+</p>
+
+
+
 
 <hr />
 
 <div>
     <h4>Servizi richiesti</h4>
 
+    <div class="text-end">
+        <a href="@Url.Action("Create", "RichiesteServizi")" class="btn btn-primary btn-sm">+ Richiesta</a>
+        <a href="@Url.Action("Index", "RichiesteServizi")" class="btn btn-primary btn-sm">→ Richieste</a>
+
+    </div>
+
     <table class="table">
         <tr>
-            <th>IDRichServizio</th>
-            <th>DataServizio</th>
-            <th>QuantitaServizio</th>
-            <th>FK_IDServizio</th>
+            <th># Richiesta</th>
+            <th>Data Servizio</th>
+            <th>Cliente</th>
+            <th>Prenotazione</th>
+            <th>Quantità</th>
+
         </tr>
 
         @foreach (var richserv in Model.Item2)
         {
             <tr>
                 <td>@richserv.IDRichServizio</td>
-                <td>@richserv.DataServizio</td>
+                <td>@richserv.DataServizio.ToString("dd/MM/yyyy")</td>
+                <td><p>@Html.ActionLink(@richserv.CognomeCliente + " " + @richserv.NomeCliente, "Details", "Clienti", new { id = richserv.FK_IDCliente }, new { @class = "link-dark" })</p></td>
+                <td><p>@Html.ActionLink(@richserv.AnnoPreno + "-" + @richserv.FK_IDPrenotazione, "Details", "Prenotazioni", new { id = richserv.FK_IDPrenotazione }, new { @class = "link-dark" })</p></td>
+
                 <td>@richserv.QuantitaServizio</td>
-                <td>@richserv.FK_IDServizio</td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", "RichiesteServizi", new { id = richserv.IDRichServizio }, null) |
+
+                <td class="text-end">
+                    @Html.ActionLink("≡ Modifica", "Edit", "RichiesteServizi", new { id = richserv.IDRichServizio }, new { @class = "btn btn-primary btn-sm" })
                 </td>
             </tr>
         }
     </table>
 </div>
 
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Item1.IDServizio }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

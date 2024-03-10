@@ -4,7 +4,7 @@
     ViewBag.Title = "Create";
 }
 
-<h2>Create</h2>
+<h3>Nuova Richiesta</h3>
 
 
 @using (Html.BeginForm()) 
@@ -12,19 +12,11 @@
     @Html.AntiForgeryToken()
     
 <div class="form-horizontal">
-    <h4>RichiestaServizio</h4>
+
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-    @*<div class="form-group">
-            @Html.LabelFor(model => model.IDRichServizio, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.IDRichServizio, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.IDRichServizio, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
-
-    <div class="form-group">
+    <div class="form-group my-3">
         @Html.LabelFor(model => model.DataServizio, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.DataServizio, "{0:yyyy-MM-dd}", new { htmlAttributes = new { @class = "form-control", @type = "date" } })
@@ -32,7 +24,7 @@
         </div>
     </div>
 
-    <div class="form-group">
+    <div class="form-group my-3">
         @Html.LabelFor(model => model.QuantitaServizio, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.QuantitaServizio, new { htmlAttributes = new { @class = "form-control" } })
@@ -40,7 +32,7 @@
         </div>
     </div>
 
-    <div class="form-group">
+    <div class="form-group my-3">
         @Html.LabelFor(model => model.FK_IDServizio, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.DropDownListFor(model => model.FK_IDServizio, ViewBag.FK_IDServizio as IEnumerable<SelectListItem>, "Seleziona Servizio", new { @class = "form-control" })
@@ -48,7 +40,7 @@
         </div>
     </div>
 
-    <div class="form-group">
+    <div class="form-group my-3">
         @Html.LabelFor(model => model.FK_IDPrenotazione, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.DropDownListFor(model => model.FK_IDPrenotazione, ViewBag.FK_IDPrenotazione as IEnumerable<SelectListItem>, "Seleziona Prenotazione", new { @class = "form-control" })
@@ -58,14 +50,14 @@
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-default" />
+            <input type="submit" value="✓ Salva" class="btn btn-primary btn-sm" />
         </div>
     </div>
 </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("← Richieste", "Index", null, new { @class = "btn btn-primary btn-sm mt-2" })
 </div>
 
 @section Scripts {

@@ -18,3 +18,43 @@ select,
 textarea {
     max-width: 280px;
 }
+
+
+/* Custom CSS */
+.navbar {
+    background-color: #414347;
+}
+
+.stars {
+    color: #BAA170;
+}
+
+.text-logo {
+    font-variant: small-caps;
+    color: #E3E3E3;
+}
+
+.body-content {
+    height: 50vh;
+
+}
+
+.bg-image {
+    background-image: url("./assets/img/arcadia.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    width: 100vw;
+}
+
+.btn-primary {
+    background-color: #BAA170;
+    border-color: #BAA170;
+}
+
+.btn-primary:hover{
+    background-color: #AA9160;
+    border-color: #BAA170;
+}
+

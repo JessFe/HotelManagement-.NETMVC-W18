@@ -4,10 +4,10 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h3>Prenotazioni</h3>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
+<p class="text-end">
+    @Html.ActionLink("+ Nuovo", "Create", null, new { @class = "btn btn-primary btn-sm" })
 </p>
 <table class="table">
     <tr>
@@ -15,71 +15,50 @@
             @Html.DisplayNameFor(model => model.IDPrenotazione)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.AnnoPreno)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DataPreno)
+            @Html.DisplayNameFor(model => model.FK_NrCamera)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.DataCheckIn)
         </th>
         <th>
+            Cliente
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.DataCheckOut)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Anticipo)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FK_IDCliente)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FK_NrCamera)
-        </th>
+        
         <th>
             @Html.DisplayNameFor(model => model.FormulaPreno)
         </th>
-        @*<th>
-            @Html.DisplayNameFor(model => model.FK_IDRichServizio)
-        </th>*@
+        
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.IDPrenotazione)
+            @Html.DisplayFor(modelItem => item.AnnoPreno)-@item.IDPrenotazione
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.AnnoPreno)
+            @Html.DisplayFor(modelItem => item.FK_NrCamera) - @Html.DisplayFor(modelItem => item.TipoCamera)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.DataPreno)
+            @item.DataCheckIn.ToString("dd/MM/yyyy")
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.DataCheckIn)
+            @Html.ActionLink(item.Cognome + " " + item.Nome, "Details", "Clienti", new { id = item.FK_IDCliente }, new { @class = "link-dark" })
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.DataCheckOut)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Anticipo)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FK_IDCliente)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FK_NrCamera)
-        </td>
+            @item.DataCheckOut.ToString("dd/MM/yyyy")
+        </td>        
         <td>
             @Html.DisplayFor(modelItem => item.FormulaPreno)
         </td>
-        @*<td>
-            @Html.DisplayFor(modelItem => item.FK_IDRichServizio)
-        </td>*@
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.IDPrenotazione }) |
-            @Html.ActionLink("Details", "Details", new { id = item.IDPrenotazione }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.IDPrenotazione })
+        
+        <td class="text-end">
+            @Html.ActionLink("≡ Modifica", "Edit", new { id = item.IDPrenotazione }, new { @class = "btn btn-primary btn-sm" })
+            @Html.ActionLink("→ Info", "Details", new { id = item.IDPrenotazione }, new { @class = "btn btn-primary btn-sm" })
+            
         </td>
     </tr>
 }

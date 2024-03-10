@@ -4,7 +4,12 @@
     ViewBag.Title = "Edit";
 }
 
-<h2>Edit</h2>
+<h3>Modifica Servizio</h3>
+<div class="fw-semibold fs-5">
+    <span>@Html.DisplayNameFor(model => model.IDServizio):</span>
+    <span class="bg-dark bg-opacity-25 rounded-3 px-2 pb-1">@Html.DisplayFor(model => model.IDServizio)</span>
+</div>
+
 
 
 @using (Html.BeginForm())
@@ -12,24 +17,13 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>Servizio</h4>
+
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
         @Html.HiddenFor(model => model.IDServizio)
 
-        @Html.DisplayNameFor(model => model.IDServizio)
-        @Html.DisplayFor(model => model.IDServizio)
-
-        @*<div class="form-group">
-                @Html.LabelFor(model => model.IDServizio, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.IDServizio, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.IDServizio, "", new { @class = "text-danger" })
-                </div>
-            </div>*@
-
-        <div class="form-group">
+        <div class="form-group my-3">
             @Html.LabelFor(model => model.TipoServizio, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.TipoServizio, new { htmlAttributes = new { @class = "form-control" } })
@@ -37,7 +31,7 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group my-3">
             @Html.LabelFor(model => model.PrezzoServizio, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.PrezzoServizio, new { htmlAttributes = new { @class = "form-control" } })
@@ -47,14 +41,14 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="✓ Salva" class="btn btn-primary btn-sm" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("← Servizi", "Index", null, new { @class = "btn btn-primary btn-sm mt-2" })
 </div>
 
 @section Scripts {

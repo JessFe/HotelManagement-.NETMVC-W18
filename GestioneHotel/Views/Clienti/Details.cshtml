@@ -4,85 +4,38 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h3>Cliente</h3>
 
 <div>
-    <h4>Cliente</h4>
+
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Item1.IDCliente)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Item1.IDCliente)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Item1.Cognome)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Item1.Cognome)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Item1.Nome)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Item1.Nome)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Item1.CodFiscale)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Item1.CodFiscale)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Item1.Citta)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Item1.Citta)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Item1.Prov)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Item1.Prov)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Item1.Tel)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Item1.Tel)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Item1.Cell)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Item1.Cell)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Item1.Email)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Item1.Email)
-        </dd>
-
-    </dl>
+    <div class="d-flex">
+        <div class="flex-column fw-semibold px-3">
+            <p># Cliente:</p>
+            <p>Cognome:</p>
+            <p>Nome:</p>
+            <p>Cod. Fiscale:</p>
+            <p>Città:</p>
+            <p>Telefono:</p>
+            <p>Cellulare:</p>
+            <p>E-mail:</p>
+        </div>
+        <div class="flex-column px-3">
+            <p class="border-bottom px-3">@Html.DisplayFor(model => model.Item1.IDCliente)</p>
+            <p class="border-bottom px-3">@Html.DisplayFor(model => model.Item1.Cognome)</p>
+            <p class="border-bottom px-3">@Html.DisplayFor(model => model.Item1.Nome)</p>
+            <p class="border-bottom px-3">@Html.DisplayFor(model => model.Item1.CodFiscale)</p>
+            <p class="border-bottom px-3">@Html.DisplayFor(model => model.Item1.Citta) (@Html.DisplayFor(model => model.Item1.Prov))</p>
+            <p class="border-bottom px-3">@Html.DisplayFor(model => model.Item1.Tel)</p>
+            <p class="border-bottom px-3">@Html.DisplayFor(model => model.Item1.Cell)</p>
+            <p class="border-bottom px-3">@Html.DisplayFor(model => model.Item1.Email)</p>
+        </div>
+    </div>
+    <p class="my-2">
+        @Html.ActionLink("≡ Modifica", "Edit", new { id = Model.Item1.IDCliente }, new { @class = "btn btn-primary btn-sm" })
+        @Html.ActionLink("← Lista Clienti", "Index", null, new { @class = "btn btn-primary btn-sm" })
+    </p>
 </div>
 
 <hr />
@@ -92,56 +45,35 @@
 
     <table class="table">
         <tr>
-            <th>IDPrenotazione</th>
-            <th>AnnoPreno</th>
-            <th>DataPreno</th>
-            <th>DataCheckIn</th>
-            <th>DataCheckOut</th>
+            <th># Pr.</th>
+            <th>Data Pr.</th>
+            <th>Camera</th>
+            <th>Check-In</th>
+            <th>Check-Out</th>
+            <th>Formula</th>
             <th>Anticipo</th>
-            <th>FK_NrCamera</th>
-            <th>FormulaPreno</th>
+            <th></th>
         </tr>
 
         @foreach (var prenotazione in Model.Item2)
         {
             <tr>
+                <td>@prenotazione.AnnoPreno-@prenotazione.IDPrenotazione</td>
+                <td>@prenotazione.DataPreno.ToString("dd/MM/yyyy")</td>
+                <td>@prenotazione.FK_NrCamera - @prenotazione.TipoCamera</td>
+                <td>@prenotazione.DataCheckIn.ToString("dd/MM/yyyy")</td>
+                <td>@prenotazione.DataCheckOut.ToString("dd/MM/yyyy")</td>
+                <td>@prenotazione.FormulaPreno</td>
+                <td>@prenotazione.Anticipo.ToString("C")</td>
                 <td>
-                    @prenotazione.IDPrenotazione
-                </td>
-                <td>
-                    @prenotazione.AnnoPreno
-                </td>
-                <td>
-                    @prenotazione.DataPreno
-                </td>
-                <td>
-                    @prenotazione.DataCheckIn
-                </td>
-                <td>
-                    @prenotazione.DataCheckOut
-                </td>
-                <td>
-                    @prenotazione.Anticipo
-                </td>
-                <td>
-                    @prenotazione.FK_NrCamera
-                </td>
-                <td>
-                    @prenotazione.FormulaPreno
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", "Prenotazioni", new { id = prenotazione.IDPrenotazione }, null) |
-                    @Html.ActionLink("Details", "Details", "Prenotazioni", new { id = prenotazione.IDPrenotazione }, null) |
-                    @Html.ActionLink("Delete", "Delete", new { id = prenotazione.IDPrenotazione })
+                    @Html.ActionLink("≡ Modifica", "Edit", "Prenotazioni", new { id = prenotazione.IDPrenotazione }, new { @class = "btn btn-primary btn-sm" })
+
+                    @Html.ActionLink("→ Info", "Details", "Prenotazioni", new { id = prenotazione.IDPrenotazione }, new { @class = "btn btn-primary btn-sm" })
                 </td>
             </tr>
         }
-
     </table>
 
 </div>
 
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Item1.IDCliente }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+

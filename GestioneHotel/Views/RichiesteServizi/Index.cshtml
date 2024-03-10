@@ -4,10 +4,10 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h3>Richieste</h3>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
+<p class="text-end">
+    @Html.ActionLink("+ Nuova Richiesta", "Create", null, new { @class = "btn btn-primary btn-sm" })
 </p>
 <table class="table">
     <tr>
@@ -18,32 +18,31 @@
             @Html.DisplayNameFor(model => model.DataServizio)
         </th>
         <th>
+            Cliente
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.QuantitaServizio)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.FK_IDServizio)
+            @Html.DisplayNameFor(model => model.TipoServizio)
         </th>
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
+        <td>@Html.DisplayFor(modelItem => item.IDRichServizio)</td>
+        <td>@item.DataServizio.ToString("dd/MM/yyyy")</td>
         <td>
-            @Html.DisplayFor(modelItem => item.IDRichServizio)
+            @Html.ActionLink(item.CognomeCliente + " " + item.NomeCliente, "Details", "Clienti", new { id = item.FK_IDCliente }, new { @class = "link-dark" })
+
+
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DataServizio)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.QuantitaServizio)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FK_IDServizio)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.IDRichServizio }) |
+        <td>@Html.DisplayFor(modelItem => item.QuantitaServizio)</td>
+        <td>@Html.DisplayFor(modelItem => item.TipoServizio)</td>
+        <td class="text-end">
+            @Html.ActionLink("≡ Modifica", "Edit", new { id = item.IDRichServizio }, new { @class = "btn btn-primary btn-sm" })
             
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
         </td>
     </tr>
 }

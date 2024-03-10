@@ -131,7 +131,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Camera.cs" />
+    <Compile Include="Models\CheckoutDetails.cs" />
     <Compile Include="Models\Cliente.cs" />
+    <Compile Include="Models\Login.cs" />
     <Compile Include="Models\Prenotazione.cs" />
     <Compile Include="Models\RichiestaServizio.cs" />
     <Compile Include="Models\Servizio.cs" />
@@ -186,8 +188,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Clienti\Index.cshtml" />
     <Content Include="Views\Clienti\Create.cshtml" />
@@ -206,9 +206,11 @@
     <Content Include="Views\RichiesteServizi\Index.cshtml" />
     <Content Include="Views\RichiesteServizi\Create.cshtml" />
     <Content Include="Views\RichiesteServizi\Edit.cshtml" />
+    <Content Include="Views\Home\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\assets\img\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />

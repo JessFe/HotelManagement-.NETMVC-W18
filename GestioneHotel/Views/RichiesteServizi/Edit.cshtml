@@ -4,75 +4,75 @@
     ViewBag.Title = "Edit";
 }
 
-<h2>Edit</h2>
+<h3>Modifica Richiesta</h3>
+<div class="fw-semibold fs-5">
+    <span>@Html.DisplayNameFor(model => model.IDRichServizio):</span>
+    <span class="bg-dark bg-opacity-25 rounded-3 px-2 pb-1">@Html.DisplayFor(model => model.IDRichServizio)</span>
+</div>
 
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
-<div class="form-horizontal">
-    <h4>RichiestaServizio</h4>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-    @Html.HiddenFor(model => model.IDRichServizio)
+    <div class="form-horizontal">
 
-    @Html.DisplayNameFor(model => model.IDRichServizio)
-    @Html.DisplayFor(model => model.IDRichServizio)
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-    @*<div class="form-group">
-            @Html.LabelFor(model => model.IDRichServizio, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.HiddenFor(model => model.IDRichServizio)
+
+        <div class="form-group my-3">
+            @Html.LabelFor(model => model.DataServizio, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.IDRichServizio, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.IDRichServizio, "", new { @class = "text-danger" })
+                @Html.TextBoxFor(model => model.DataServizio, "{0:yyyy-MM-dd}", new { @class = "form-control", @type = "date" })
+                @Html.ValidationMessageFor(model => model.DataServizio, "", new { @class = "text-danger" })
             </div>
-        </div>*@
+        </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.DataServizio, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.DataServizio, "{0:yyyy-MM-dd}", new { htmlAttributes = new { @class = "form-control", @type = "date" } })
-            @Html.ValidationMessageFor(model => model.DataServizio, "", new { @class = "text-danger" })
+        <div class="form-group my-3">
+            @Html.LabelFor(model => model.QuantitaServizio, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.QuantitaServizio, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.QuantitaServizio, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group my-3">
+            @Html.LabelFor(model => model.FK_IDServizio, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.FK_IDServizio, ViewBag.FK_IDServizio as IEnumerable<SelectListItem>, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.FK_IDServizio, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group my-3">
+            @Html.LabelFor(model => model.FK_IDPrenotazione, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.FK_IDPrenotazione, ViewBag.FK_IDPrenotazione as IEnumerable<SelectListItem>, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.FK_IDPrenotazione, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="✓ Salva" class="btn btn-primary btn-sm" />
+            </div>
         </div>
     </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.QuantitaServizio, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.QuantitaServizio, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.QuantitaServizio, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.FK_IDServizio, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.FK_IDServizio, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.FK_IDServizio, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.FK_IDPrenotazione, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownListFor(model => model.FK_IDPrenotazione, ViewBag.FK_IDPrenotazione as IEnumerable<SelectListItem>, "Seleziona Prenotazione", new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.FK_IDPrenotazione, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Save" class="btn btn-default" />
-        </div>
-    </div>
-</div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("← Richieste", "Index", null, new { @class = "btn btn-primary btn-sm mt-2" })
 </div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+
+<script>
+$(document).ready(function() {
+    $('#FK_IDServizio').val('@Model.FK_IDServizio');
+    $('#FK_IDPrenotazione').val('@Model.FK_IDPrenotazione');
+});
+</script>

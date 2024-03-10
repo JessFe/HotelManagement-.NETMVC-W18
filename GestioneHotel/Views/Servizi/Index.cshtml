@@ -4,11 +4,14 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h3>Servizi</h3>
 
-@*<p>
-    @Html.ActionLink("Create New", "Create")
-</p>*@
+<div class="text-end">
+    <a href="@Url.Action("Create", "RichiesteServizi")" class="btn btn-primary btn-sm">+ Richiesta</a>
+    <a href="@Url.Action("Index", "RichiesteServizi")" class="btn btn-primary btn-sm">→ Richieste</a>
+
+</div>
+
 <table class="table">
     <tr>
         <th>
@@ -19,6 +22,9 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.PrezzoServizio)
+        </th>
+        <th>
+            Richieste
         </th>
         <th></th>
     </tr>
@@ -32,12 +38,15 @@
             @Html.DisplayFor(modelItem => item.TipoServizio)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.PrezzoServizio)
+            @Html.DisplayFor(modelItem => item.PrezzoServizio) €
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.IDServizio }) |
-            @Html.ActionLink("Details", "Details", new { id = item.IDServizio }) |
-            @*@Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
+            @Html.DisplayFor(modelItem => item.TotaleRichieste)
+        </td>
+        <td class="text-end">
+            @Html.ActionLink("≡ Modifica", "Edit", new { id = item.IDServizio }, new { @class = "btn btn-primary btn-sm" })
+            @Html.ActionLink("→ Info", "Details", new { id = item.IDServizio }, new { @class = "btn btn-primary btn-sm" })
+            
         </td>
     </tr>
 }

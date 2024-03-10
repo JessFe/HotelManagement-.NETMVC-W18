@@ -4,11 +4,9 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h3>Camere</h3>
 
-@*<p>
-    @Html.ActionLink("Create New", "Create")
-</p>*@
+
 <table class="table">
     <tr>
         <th>
@@ -19,6 +17,9 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.PrezzoCamera)
+        </th>
+        <th>
+            Prenotazioni
         </th>
         <th></th>
     </tr>
@@ -32,12 +33,15 @@
             @Html.DisplayFor(modelItem => item.TipoCamera)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.PrezzoCamera)
+            @Html.DisplayFor(modelItem => item.PrezzoCamera) €
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.NrCamera }) |
-            @Html.ActionLink("Details", "Details", new { id = item.NrCamera }) |
-            @*@Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
+            @Html.DisplayFor(modelItem => item.TotalePrenotazioni)
+        </td>
+        <td class="text-end">
+            @Html.ActionLink("≡ Modifica", "Edit", new { id = item.NrCamera }, new { @class = "btn btn-primary btn-sm" })
+            @Html.ActionLink("→ Info", "Details", new { id = item.NrCamera }, new { @class = "btn btn-primary btn-sm" })
+            
         </td>
     </tr>
 }

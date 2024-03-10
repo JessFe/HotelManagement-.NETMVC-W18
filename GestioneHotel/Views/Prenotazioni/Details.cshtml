@@ -1,97 +1,72 @@
-﻿@model Tuple<GestioneHotel.Models.Prenotazione, List<GestioneHotel.Models.RichiestaServizio>>
+﻿@model Tuple<GestioneHotel.Models.Prenotazione, List<GestioneHotel.Models.RichiestaServizio>, GestioneHotel.Models.CheckoutDetails>
+
 
 @{
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h3>Prenotazione</h3>
 
-<div>
-    <h4>Prenotazione</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Item1.IDPrenotazione)
-        </dt>
+<hr />
 
-        <dd>
-            @Html.DisplayFor(model => model.Item1.IDPrenotazione)
-        </dd>
+<div class="d-flex justify-content-between">
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Item1.AnnoPreno)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Item1.AnnoPreno)
-        </dd>
+    <div class="d-flex">
+        <div class="flex-column fw-semibold px-3">
+            <p># Prenotazione:</p>
+            <p>Data Prenotazione:</p>
+            <p>Cliente:</p>
+            <br />
+            <p>Data Check-In:</p>
+            <p>Data Check-Out:</p>
+            <p>Camera:</p>
+            <p>Formula:</p>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Item1.DataPreno)
-        </dt>
+        </div>
+        <div class="flex-column px-3">
+            <p class="border-bottom px-3">@Model.Item1.AnnoPreno-@Model.Item1.IDPrenotazione</p>
+            <p class="border-bottom px-3">@Model.Item1.DataPreno.ToString("dd/MM/yyyy")</p>
+            <p class="border-bottom px-3">@Html.ActionLink(Model.Item1.Cognome + " " + Model.Item1.Nome, "Details", "Clienti", new { id = Model.Item1.FK_IDCliente }, new { @class = "link-dark" })</p>
+            <br />
+            <p class="border-bottom px-3">@Model.Item1.DataCheckIn.ToString("dd/MM/yyyy")</p>
+            <p class="border-bottom px-3">@Model.Item1.DataCheckOut.ToString("dd/MM/yyyy")</p>
+            <p class="border-bottom px-3">@Model.Item1.FK_NrCamera - @Model.Item1.TipoCamera</p>
+            <p class="border-bottom px-3">@Html.DisplayFor(model => model.Item1.FormulaPreno)</p>
 
-        <dd>
-            @Html.DisplayFor(model => model.Item1.DataPreno)
-        </dd>
+        </div>
+    </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Item1.DataCheckIn)
-        </dt>
+    <div class="d-flex align-items-end me-3">
+        <div class="flex-column text-end px-3">
+            <p>Soggiorno:</p>
+            <p>Anticipo:</p>
+            <p>Servizi:</p>
+            <br />
+            <p>Checkout:</p>
 
-        <dd>
-            @Html.DisplayFor(model => model.Item1.DataCheckIn)
-        </dd>
+        </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Item1.DataCheckOut)
-        </dt>
+        <div class="flex-column text-end px-3">
+            <p class="border-bottom px-5">@Model.Item3.CostoSoggiorno.ToString("C")</p>
+            <p class="border-bottom px-5"><span class="text-black text-opacity-50 pe-3">-</span> @Model.Item1.Anticipo.ToString("C")</p>
+            <p class="border-bottom px-5"><span class="text-black text-opacity-50 pe-3">+</span> @Model.Item3.CostoServizi.ToString("C")</p>
+            <br />
+            <p class="border-bottom fw-semibold px-5">@Model.Item3.ImportoDovuto.ToString("C")</p>
 
-        <dd>
-            @Html.DisplayFor(model => model.Item1.DataCheckOut)
-        </dd>
+        </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Item1.Anticipo)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Item1.Anticipo)
-        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Item1.FK_IDCliente)
-        </dt>
+    </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Item1.FK_IDCliente)
-        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Item1.FK_NrCamera)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Item1.FK_NrCamera)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Item1.FormulaPreno)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Item1.FormulaPreno)
-        </dd>
-
-        @*<dt>
-                @Html.DisplayNameFor(model => model.Item1.FK_IDRichServizio)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Item1.FK_IDRichServizio)
-            </dd>*@
-
-    </dl>
 </div>
+
+<p class="my-2">
+    @Html.ActionLink("≡ Modifica", "Edit", new { id = Model.Item1.IDPrenotazione }, new { @class = "btn btn-primary btn-sm" })
+    @Html.ActionLink("← Prenotazioni", "Index", null, new { @class = "btn btn-primary btn-sm" })
+</p>
 
 <hr />
 
@@ -100,21 +75,25 @@
 
     <table class="table">
         <tr>
-            <th>IDRichServizio</th>
-            <th>DataServizio</th>
-            <th>QuantitaServizio</th>
-            <th>FK_IDServizio</th>
+            <th># Richiesta</th>
+            <th>Data Servizio</th>
+            <th>Servizio</th>
+            <th>Quantità</th>
+            <th>Prezzo</th>
+            <th>Totale</th>
         </tr>
 
         @foreach (var richserv in Model.Item2)
         {
             <tr>
                 <td>@richserv.IDRichServizio</td>
-                <td>@richserv.DataServizio</td>
+                <td>@richserv.DataServizio.ToString("dd/MM/yyyy")</td>
+                <td>#@richserv.FK_IDServizio - @richserv.TipoServizio</td>
                 <td>@richserv.QuantitaServizio</td>
-                <td>@richserv.FK_IDServizio</td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", "RichiesteServizi", new { id = richserv.IDRichServizio }, null) |
+                <td>@richserv.PrezzoServizio €</td>
+                <td>@richserv.TotServizio €</td>
+                <td class="text-end">
+                    @Html.ActionLink("≡ Modifica", "Edit", "RichiesteServizi", new { id = richserv.IDRichServizio }, new { @class = "btn btn-primary btn-sm" })
                 </td>
             </tr>
         }
@@ -122,6 +101,5 @@
 </div>
 
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Item1.IDPrenotazione }) |
-    @Html.ActionLink("Back to List", "Index")
+    <a href="@Url.Action("Index", "Servizi")" class="btn btn-primary btn-sm">→ Servizi</a>
 </p>

@@ -4,7 +4,7 @@
     ViewBag.Title = "Create";
 }
 
-<h2>Create</h2>
+<h3>Nuova Prenotazione</h3>
 
 
 @using (Html.BeginForm())
@@ -12,27 +12,19 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>Prenotazione</h4>
+
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-        @*<div class="form-group">
-                @Html.LabelFor(model => model.IDPrenotazione, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.IDPrenotazione, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.IDPrenotazione, "", new { @class = "text-danger" })
-                </div>
-            </div>*@
-
-        <div class="form-group">
+        <div class="form-group my-3">
             @Html.LabelFor(model => model.AnnoPreno, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.AnnoPreno, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.AnnoPreno, new { htmlAttributes = new { @class = "form-control", placeholder = "es. 2024" } })
                 @Html.ValidationMessageFor(model => model.AnnoPreno, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group my-3">
             @Html.LabelFor(model => model.DataPreno, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.DataPreno, "{0:yyyy-MM-dd}", new { htmlAttributes = new { @class = "form-control", @type = "date" } })
@@ -40,7 +32,7 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group my-3">
             @Html.LabelFor(model => model.DataCheckIn, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.DataCheckIn, "{0:yyyy-MM-dd}", new { htmlAttributes = new { @class = "form-control", @type = "date" } })
@@ -48,7 +40,7 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group my-3">
             @Html.LabelFor(model => model.DataCheckOut, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.DataCheckOut, "{0:yyyy-MM-dd}", new { htmlAttributes = new { @class = "form-control", @type = "date" } })
@@ -56,39 +48,32 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group my-3">
             @Html.LabelFor(model => model.Anticipo, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Anticipo, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Anticipo, new { htmlAttributes = new { @class = "form-control", placeholder = "es. 200" } })
                 @Html.ValidationMessageFor(model => model.Anticipo, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group my-3">
             @Html.LabelFor(model => model.FK_IDCliente, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.FK_IDCliente, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.DropDownListFor(model => model.FK_IDCliente, (IEnumerable<SelectListItem>)ViewBag.FK_IDCliente, "Seleziona un cliente", new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.FK_IDCliente, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group my-3">
             @Html.LabelFor(model => model.FK_NrCamera, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.FK_NrCamera, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.DropDownListFor(model => model.FK_NrCamera, (IEnumerable<SelectListItem>)ViewBag.FK_NrCamera, "Seleziona una camera", new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.FK_NrCamera, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        @*<div class="form-group">
-                @Html.LabelFor(model => model.FK_IDTipoPreno, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.FK_IDTipoPreno, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.FK_IDTipoPreno, "", new { @class = "text-danger" })
-                </div>
-            </div>*@
 
-        <div class="form-group">
+        <div class="form-group my-3">
             @Html.LabelFor(model => model.FormulaPreno, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownListFor(model => model.FormulaPreno, (IEnumerable<SelectListItem>)ViewBag.FormulaPreno, "Seleziona uno stato", new { @class = "form-control" })
@@ -96,24 +81,17 @@
             </div>
         </div>
 
-        @*<div class="form-group">
-                @Html.LabelFor(model => model.FK_IDRichServizio, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.FK_IDRichServizio, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.FK_IDRichServizio, "", new { @class = "text-danger" })
-                </div>
-            </div>*@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="✓ Salva" class="btn btn-primary btn-sm" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("← Prenotazioni", "Index", null, new { @class = "btn btn-primary btn-sm mt-2" })
 </div>
 
 @section Scripts {
